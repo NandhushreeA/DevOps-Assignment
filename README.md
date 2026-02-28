@@ -1,5 +1,7 @@
 # DevOps Assignment - Production Infrastructure
 
+![Terraform CI](https://github.com/Nandhushree-A/DevOps-Assignment/actions/workflows/terraform-ci.yml/badge.svg)
+
 This project implements a professional, secure, and production-ready DevOps workflow for deploying a FastAPI backend and Next.js frontend on AWS using Terraform.
 
 ## Architecture Overview
@@ -73,6 +75,7 @@ terraform {
 ### Prerequisites
 - Terraform >= 1.5.0
 - AWS CLI configured with appropriate permissions
+- AWS account with access to S3 and DynamoDB for backend
 
 ### 1. Initialize
 Sets up the remote backend and downloads providers.
@@ -101,9 +104,26 @@ terraform destroy -auto-approve
 - **Module Refactoring**: Encapsulated resource logic for reusability.
 
 ## Screenshots
-*(Screenshots are located in `docs/screenshots/`)*
-- EC2 Instance Running
-- S3 Bucket with State File
-- DynamoDB Table for Locking
-- Terraform Apply Output
-- Terraform Destroy Output
+*(Screenshots are located in `docs/screenshots/` and embedded below for quick review.)*
+
+### EC2 Instance Running
+![EC2](docs/screenshots/EC2.png)
+
+### S3 Bucket with State File
+![S3 Bucket](docs/screenshots/S3%20Bucket.png)
+
+### DynamoDB Lock Table
+![DynamoDB](docs/screenshots/DynamoDB.png)
+
+### Terraform Apply Output
+![Terraform Apply Output](docs/screenshots/Terraform%20Apply%20Output.png)
+
+### Terraform Destroy Output
+![Terraform Destroy Output](docs/screenshots/Terraform%20Destroy%20Output.png)
+
+## CI/CD
+- GitHub Actions workflow validates Terraform on every push/PR:
+  - Format check: `terraform fmt -check -recursive`
+  - Initialization without backend: `terraform init -backend=false`
+  - Validation: `terraform validate`
+- Workflow file: `.github/workflows/terraform-ci.yml`
