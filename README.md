@@ -1,6 +1,6 @@
 # DevOps Assignment - Production Infrastructure
 
-![Terraform CI](https://github.com/Nandhushree-A/DevOps-Assignment/actions/workflows/terraform-ci.yml/badge.svg)
+![Terraform CI](https://github.com/NandhushreeA/DevOps-Assignment/actions/workflows/terraform-ci.yml/badge.svg)
 
 This project implements a professional, secure, and production-ready DevOps workflow for deploying a FastAPI backend and Next.js frontend on AWS using Terraform.
 
