@@ -17,9 +17,9 @@ module "iam" {
 module "ec2" {
   source = "./modules/ec2"
 
-  ami_id         = var.ami_id
-  instance_type  = var.instance_type
-  subnet_id      = module.vpc.public_subnet_id
-  sg_id          = module.security_group.sg_id
+  ami_id           = var.ami_id
+  instance_type    = var.instance_type
+  subnet_id        = module.vpc.public_subnet_id
+  sg_id            = module.security_group.sg_id
   instance_profile = module.iam.instance_profile
 }
