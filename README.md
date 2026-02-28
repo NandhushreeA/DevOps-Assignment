@@ -37,15 +37,15 @@ Infrastructure (VPC, EC2, IAM, SG)
 └── terraform/             # Infrastructure as Code
     └── environments/
         └── dev/           # Development environment
-            ├── modules/   # Reusable infrastructure modules
-            │   ├── vpc/   # Networking resources
-            │   ├── ec2/   # Compute resources
-            │   ├── iam/   # Identity and Access Management
-            │   └── security-groups/ # Firewall rules
             ├── main.tf    # Root configuration
             ├── backend.tf # Remote backend definition
             ├── providers.tf # Provider constraints
             └── terraform.tfvars # Environment variables
+        ├── modules/   # Reusable infrastructure modules
+            │   ├── vpc/   # Networking resources
+            │   ├── ec2/   # Compute resources
+            │   ├── iam/   # Identity and Access Management
+            │   └── security-groups/ # Firewall rules
 ```
 
 ## Infrastructure Configuration
@@ -77,14 +77,6 @@ terraform {
 - AWS CLI configured with appropriate permissions
 - AWS account with access to S3 and DynamoDB for backend
 
-### Remote Backend (S3 + DynamoDB)
-Create backend components:
-```bash
-aws s3api create-bucket --bucket <my-unique-terraform-state-bucket> --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1
-aws s3api put-bucket-versioning --bucket <my-unique-terraform-state-bucket> --versioning-configuration Status=Enabled
-aws dynamodb create-table --table-name terraform-lock-table --attribute-definitions AttributeName=LockID,AttributeType=S --key-schema AttributeName=LockID,KeyType=HASH --billing-mode PAY_PER_REQUEST --region ap-south-1
-```
-
 ### 1. Initialize
 Sets up the remote backend and downloads providers.
 ```bash
@@ -96,7 +88,7 @@ terraform init
 Review and deploy the infrastructure.
 ```bash
 terraform plan
-terraform apply -auto-approve
+
 ```
 
 ### 3. Destroy
@@ -135,9 +127,3 @@ terraform destroy -auto-approve
   - Initialization without backend: `terraform init -backend=false`
   - Validation: `terraform validate`
 - Workflow file: `.github/workflows/terraform-ci.yml`
-
-## Security Group Rules
-The security group allows:
-- Port 8000 from a specific IP: `49.204.123.10/32`
-- Port 3000 open to the internet: `0.0.0.0/0`
-- Port 8080 from a specific IP: `49.204.123.10/32`
